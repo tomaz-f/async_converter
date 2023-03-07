@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "fastapi-project1"
+name = "async_converter"
 version = "0.1.0"
 description = ""
 authors = ["Felipe <tomazalvesfelipe@gmail.com>"]
 readme = "README.md"
-packages = [{include = "fastapi_project1"}]
+packages = [{include = "async_converter"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
