@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Path, Query
 from converter import sync_converter, async_converter
 from asyncio import gather
-from schemas import ConverterInput
+from schemas import ConverterInput, ConverterOutput
 
 router = APIRouter(prefix='/converter')
 
@@ -60,12 +60,10 @@ async def async_converter_router(
     return result
 
 
-@router.get("/async/v2/{from_currency}")
+@router.get("/async/v2/{from_currency}", response_model=ConverterOutput)
 async def async_converter_router_body(
     body: ConverterInput,
     from_currency: str = Path(max_length=3, regex='^[A-Z]{3}$'),
-    to_currencies: str = Query(max_length=50, regex='^[A-Z]{3}(,[A-Z]{3})*$'),
-    price: float = Query(gt=0)
 ):
     to_currencies = body.to_currencies
     price = body.price
@@ -82,4 +80,7 @@ async def async_converter_router_body(
         courotines.append(coro)
 
     result = await gather(*courotines)
-    return result
+    return ConverterOutput(
+        message='Conversão realizada com sucesso',
+        data=result
+    )

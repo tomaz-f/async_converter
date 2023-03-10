@@ -15,6 +15,11 @@ class ConverterInput(BaseModel):
         return value
 
 
+class ConverterOutput(BaseModel):
+    message: str
+    data: List[dict]
+
+
 """
 Body esperado na request:
 {
